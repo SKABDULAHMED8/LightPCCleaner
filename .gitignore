@@ -9,3 +9,5 @@ publish-trim-test/
 *.pdb
 *.log
 startup-trace.txt
+# Release packages
+*.zip

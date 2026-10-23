@@ -1,0 +1,11 @@
+bin/
+obj/
+publish/
+publish-test/
+publish-trim-test/
+.vs/
+*.user
+*.suo
+*.pdb
+*.log
+startup-trace.txt

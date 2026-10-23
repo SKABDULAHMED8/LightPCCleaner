@@ -1,0 +1,515 @@
+<Window x:Class="LightPCCleaner.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Light PC Cleaner"
+        Width="1050"
+        Height="720"
+        MinWidth="850"
+        MinHeight="600"
+        Background="#090D14"
+        Foreground="#E8EEF7"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+
+        <!-- Main panels -->
+
+        <Style x:Key="GlassPanel"
+               TargetType="Border">
+
+            <Setter Property="Background"
+                    Value="#111823"/>
+
+            <Setter Property="BorderBrush"
+                    Value="#263344"/>
+
+            <Setter Property="BorderThickness"
+                    Value="1"/>
+
+            <Setter Property="CornerRadius"
+                    Value="10"/>
+
+        </Style>
+
+
+        <!-- Normal buttons -->
+
+        <Style x:Key="ActionButton"
+               TargetType="Button">
+
+            <Setter Property="Foreground"
+                    Value="#FFFFFF"/>
+
+            <Setter Property="Background"
+                    Value="#162131"/>
+
+            <Setter Property="BorderBrush"
+                    Value="#30445B"/>
+
+            <Setter Property="BorderThickness"
+                    Value="1"/>
+
+            <Setter Property="Padding"
+                    Value="18,10"/>
+
+            <Setter Property="Margin"
+                    Value="5"/>
+
+            <Setter Property="FontSize"
+                    Value="14"/>
+
+            <Setter Property="Cursor"
+                    Value="Hand"/>
+
+        </Style>
+
+
+        <!-- Main clean button -->
+
+        <Style x:Key="PrimaryButton"
+               TargetType="Button"
+               BasedOn="{StaticResource ActionButton}">
+
+            <Setter Property="Background"
+                    Value="#087F5B"/>
+
+            <Setter Property="BorderBrush"
+                    Value="#16B981"/>
+
+            <Setter Property="FontWeight"
+                    Value="SemiBold"/>
+
+        </Style>
+
+
+        <!-- Clear button -->
+
+        <Style x:Key="DangerButton"
+               TargetType="Button"
+               BasedOn="{StaticResource ActionButton}">
+
+            <Setter Property="Background"
+                    Value="#29151A"/>
+
+            <Setter Property="BorderBrush"
+                    Value="#63313B"/>
+
+        </Style>
+
+
+        <!-- GREEN SAFE BADGE -->
+
+        <Style x:Key="SafeBadge"
+               TargetType="Border">
+
+            <Setter Property="Background"
+                    Value="#083E2D"/>
+
+            <Setter Property="BorderBrush"
+                    Value="#12694D"/>
+
+            <Setter Property="BorderThickness"
+                    Value="1"/>
+
+            <Setter Property="CornerRadius"
+                    Value="12"/>
+
+            <Setter Property="Padding"
+                    Value="10,5"/>
+
+        </Style>
+
+
+        <!-- YELLOW REVIEW BADGE -->
+
+        <Style x:Key="ReviewBadge"
+               TargetType="Border">
+
+            <Setter Property="Background"
+                    Value="#413114"/>
+
+            <Setter Property="BorderBrush"
+                    Value="#735A1C"/>
+
+            <Setter Property="BorderThickness"
+                    Value="1"/>
+
+            <Setter Property="CornerRadius"
+                    Value="12"/>
+
+            <Setter Property="Padding"
+                    Value="10,5"/>
+
+        </Style>
+
+
+        <!-- CLEANUP ITEM -->
+
+        <DataTemplate x:Key="CleanupItemTemplate">
+
+            <Border Margin="0,0,0,8"
+                    Padding="14"
+                    Background="#0E151F"
+                    BorderBrush="#202D3D"
+                    BorderThickness="1"
+                    CornerRadius="8">
+
+                <Grid>
+
+                    <Grid.ColumnDefinitions>
+
+                        <ColumnDefinition Width="38"/>
+
+                        <ColumnDefinition Width="*"/>
+
+                        <ColumnDefinition Width="120"/>
+
+                        <ColumnDefinition Width="145"/>
+
+                    </Grid.ColumnDefinitions>
+
+
+                    <!-- CHECKBOX -->
+
+                    <CheckBox Grid.Column="0"
+                              VerticalAlignment="Center"
+                              HorizontalAlignment="Center"
+                              IsChecked="{Binding IsSelected}"
+                              Checked="SelectionChanged"
+                              Unchecked="SelectionChanged"/>
+
+
+                    <!-- INFORMATION -->
+
+                    <StackPanel Grid.Column="1"
+                                Margin="5,0,10,0">
+
+                        <TextBlock Text="{Binding Name}"
+                                   FontSize="15"
+                                   FontWeight="SemiBold"
+                                   Foreground="#F1F5F9"/>
+
+                        <TextBlock Text="{Binding Description}"
+                                   FontSize="11"
+                                   Margin="0,4,0,0"
+                                   Foreground="#8190A3"
+                                   TextTrimming="CharacterEllipsis"/>
+
+                        <TextBlock Text="{Binding Path}"
+                                   FontSize="10"
+                                   Margin="0,3,0,0"
+                                   Foreground="#566579"
+                                   TextTrimming="CharacterEllipsis"/>
+
+                    </StackPanel>
+
+
+                    <!-- SIZE -->
+
+                    <TextBlock Grid.Column="2"
+                               Text="{Binding SizeText}"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Right"
+                               Margin="10"
+                               FontSize="15"
+                               FontWeight="SemiBold"
+                               Foreground="#D8E2EE"/>
+
+
+                    <!-- SAFETY BADGES -->
+
+                    <StackPanel Grid.Column="3"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right">
+
+
+                        <!-- SAFE -->
+
+                        <Border Style="{StaticResource SafeBadge}"
+                                Visibility="{Binding SafeBadgeVisibility}">
+
+                            <TextBlock Text="SAFE TO CLEAN"
+                                       FontSize="10"
+                                       FontWeight="Bold"
+                                       Foreground="#36D9A5"/>
+
+                        </Border>
+
+
+                        <!-- REVIEW -->
+
+                        <Border Style="{StaticResource ReviewBadge}"
+                                Visibility="{Binding ReviewBadgeVisibility}">
+
+                            <TextBlock Text="REVIEW FIRST"
+                                       FontSize="10"
+                                       FontWeight="Bold"
+                                       Foreground="#F5BE46"/>
+
+                        </Border>
+
+
+                    </StackPanel>
+
+                </Grid>
+
+            </Border>
+
+        </DataTemplate>
+
+    </Window.Resources>
+
+
+    <!-- MAIN -->
+
+    <Grid Margin="22">
+
+        <Grid.RowDefinitions>
+
+            <RowDefinition Height="Auto"/>
+
+            <RowDefinition Height="Auto"/>
+
+            <RowDefinition Height="*"/>
+
+            <RowDefinition Height="Auto"/>
+
+        </Grid.RowDefinitions>
+
+
+        <!-- HEADER -->
+
+        <Grid Grid.Row="0"
+              Margin="0,0,0,18">
+
+            <StackPanel>
+
+                <TextBlock Text="LIGHT PC CLEANER"
+                           FontSize="27"
+                           FontWeight="Bold"
+                           Foreground="#F4F8FC"/>
+
+                <TextBlock Text="Safe storage maintenance for Windows 10 / 11"
+                           FontSize="12"
+                           Margin="0,4,0,0"
+                           Foreground="#718096"/>
+
+            </StackPanel>
+
+
+            <!-- OFFLINE STATUS -->
+
+            <Border HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Padding="12,7"
+                    CornerRadius="15"
+                    Background="#0B261F"
+                    BorderBrush="#145C48"
+                    BorderThickness="1">
+
+                <StackPanel Orientation="Horizontal">
+
+                    <Ellipse Width="8"
+                             Height="8"
+                             Fill="#18D69A"
+                             Margin="0,0,7,0"/>
+
+                    <TextBlock Text="OFFLINE MODE"
+                               FontSize="10"
+                               FontWeight="Bold"
+                               Foreground="#36D9A5"/>
+
+                </StackPanel>
+
+            </Border>
+
+        </Grid>
+
+
+        <!-- STATUS PANEL -->
+
+        <Border Grid.Row="1"
+                Style="{StaticResource GlassPanel}"
+                Padding="18"
+                Margin="0,0,0,14">
+
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+
+                    <ColumnDefinition Width="*"/>
+
+                    <ColumnDefinition Width="Auto"/>
+
+                    <ColumnDefinition Width="Auto"/>
+
+                </Grid.ColumnDefinitions>
+
+
+                <!-- STATUS -->
+
+                <StackPanel>
+
+                    <TextBlock x:Name="StatusTitle"
+                               Text="READY TO SCAN"
+                               FontSize="13"
+                               FontWeight="Bold"
+                               Foreground="#36D9A5"/>
+
+                    <TextBlock x:Name="StatusMessage"
+                               Text="Scan for safe temporary and application cache data."
+                               Margin="0,5,0,0"
+                               FontSize="11"
+                               Foreground="#77869A"/>
+
+                    <ProgressBar x:Name="ScanProgress"
+                                 Height="3"
+                                 Margin="0,12,0,0"
+                                 IsIndeterminate="False"
+                                 Visibility="Collapsed"
+                                 Background="#182333"
+                                 Foreground="#13C992"/>
+
+                </StackPanel>
+
+
+                <!-- FOUND -->
+
+                <StackPanel Grid.Column="1"
+                            HorizontalAlignment="Right"
+                            Margin="30,0,25,0">
+
+                    <TextBlock Text="FOUND"
+                               FontSize="9"
+                               Foreground="#64748B"
+                               HorizontalAlignment="Right"/>
+
+                    <TextBlock x:Name="FoundSizeText"
+                               Text="0 B"
+                               FontSize="21"
+                               FontWeight="Bold"
+                               Foreground="#E5EDF7"/>
+
+                </StackPanel>
+
+
+                <!-- SELECTED -->
+
+                <StackPanel Grid.Column="2"
+                            HorizontalAlignment="Right">
+
+                    <TextBlock Text="SELECTED"
+                               FontSize="9"
+                               Foreground="#64748B"
+                               HorizontalAlignment="Right"/>
+
+                    <TextBlock x:Name="SelectedSizeText"
+                               Text="0 B"
+                               FontSize="21"
+                               FontWeight="Bold"
+                               Foreground="#36D9A5"/>
+
+                </StackPanel>
+
+            </Grid>
+
+        </Border>
+
+
+        <!-- CLEANUP LIST -->
+
+        <Border Grid.Row="2"
+                Style="{StaticResource GlassPanel}"
+                Padding="14">
+
+            <Grid>
+
+                <Grid.RowDefinitions>
+
+                    <RowDefinition Height="Auto"/>
+
+                    <RowDefinition Height="*"/>
+
+                </Grid.RowDefinitions>
+
+
+                <!-- LIST HEADER -->
+
+                <Grid Margin="5,2,5,12">
+
+                    <TextBlock Text="CLEANUP CATEGORIES"
+                               FontSize="12"
+                               FontWeight="Bold"
+                               Foreground="#9BAABD"/>
+
+                    <TextBlock x:Name="ItemCountText"
+                               Text="0 items"
+                               HorizontalAlignment="Right"
+                               FontSize="11"
+                               Foreground="#64748B"/>
+
+                </Grid>
+
+
+                <!-- ITEMS -->
+
+                <ListBox x:Name="CleanupList"
+                         Grid.Row="1"
+                         Background="Transparent"
+                         BorderThickness="0"
+                         ItemsSource="{Binding CleanupItems}"
+                         ItemTemplate="{StaticResource CleanupItemTemplate}"
+                         ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+
+            </Grid>
+
+        </Border>
+
+
+        <!-- FOOTER -->
+
+        <Grid Grid.Row="3"
+              Margin="0,15,0,0">
+
+
+            <!-- LEFT BUTTONS -->
+
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Left">
+
+                <Button Content="SCAN"
+                        Click="Scan_Click"
+                        Style="{StaticResource ActionButton}"
+                        Width="105"/>
+
+                <Button Content="SELECT SAFE"
+                        Click="SelectAll_Click"
+                        Style="{StaticResource ActionButton}"
+                        Width="125"/>
+
+                <Button Content="CLEAR"
+                        Click="Clear_Click"
+                        Style="{StaticResource DangerButton}"
+                        Width="100"/>
+
+            </StackPanel>
+
+
+            <!-- CLEAN -->
+
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+
+                <Button Content="CLEAN SELECTED"
+                        Click="Clean_Click"
+                        Style="{StaticResource PrimaryButton}"
+                        Width="175"
+                        Height="42"/>
+
+            </StackPanel>
+
+        </Grid>
+
+    </Grid>
+
+</Window>

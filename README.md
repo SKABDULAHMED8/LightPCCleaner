@@ -2,6 +2,8 @@
 
 Windows 10/11 offline safe-clean utility.
 
+> **License & Permission:** Light PC Cleaner is proprietary software. You may view the source and use an official compiled release according to the `LICENSE`. Reuse of substantial source code, modified or rebuilt versions, redistribution, commercial integration, or derivative products requires written permission from **SK ABDUL AHMED**. See [`LICENSE`](LICENSE) and [`PERMISSIONS.md`](PERMISSIONS.md).
+
 ## What changed
 - Interactive dark high-tech UI.
 - Green `SAFE TO CLEAN SELECTED` status.
